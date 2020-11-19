@@ -1,0 +1,236 @@
+
+
+import random
+import os
+
+def randomlarge(a):
+    
+    
+    
+    
+        
+    c = int(a*4)
+
+    
+    return c
+filenamelist = os.listdir('skill/swordman')
+for filename in filenamelist:
+    
+    
+    
+    file = open('skill/swordman/'+filename,'rb')
+    str1 = file.readlines()
+    file.close()
+    for i in range(len(str1)):
+
+    #13,10
+        #str1[i] == b'[/static data]\r\n' 
+        if(str1[i] == b'\t[level info]\r\n'):
+            
+            prestr = bytearray([])
+            prestr.append(9)
+            prestr.append(9)
+            list9 = []
+            for j in range(len(str1[i+1])):
+     
+                
+                if(str1[i+1][j] == 9 or str1[i+1][j] == 45):
+                    
+                    list9.append(j)
+                #else:
+                #    print(str1[i+1][j],' in ',j)
+            
+            list9.append(len(str1[i+1])-2)
+            #print(list9)
+            count = 0
+            for j in range(len(list9)-1):
+                count += 1
+                a = 0
+                numbit = list9[j+1]-list9[j]-1
+                
+
+                for k in range(numbit):
+                    
+
+                    a += (str1[i+1][list9[j]+1+k]-48)*(10**(numbit-k-1))
+
+                
+                #删除数据 
+                
+                if(a == 0):
+                    continue
+                if(count != 2):
+                    
+                    b = randomlarge(a)
+                else:
+                    b = a
+                    print(b)
+                prec = []
+                for k in range(len(str(b))):
+                    
+                    c = b%10+48
+                    b = int(b/10)
+                    prec.append(c)
+                for k in range(len(prec)-1,-1,-1):
+                    prestr.append(prec[k])
+                prestr.append(9)
+            prestr.pop(-1)
+            
+            prestr.append(13)
+            prestr.append(10)
+
+
+                
+            str1[i+1] = bytes(prestr)
+        if(str1[i] == b'[level info]\r\n'):
+            
+            prestr = bytearray([])
+            prestr.append(9)
+            prestr.append(9)
+            list9 = []
+            for j in range(len(str1[i+1])):
+     
+                
+                if(str1[i+1][j] == 9 or str1[i+1][j] == 45):
+                    
+                    list9.append(j)
+                #else:
+                #    print(str1[i+1][j],' in ',j)
+            
+            list9.append(len(str1[i+1])-2)
+            #print(list9)
+            count = 0
+            for j in range(len(list9)-1):
+                count += 1
+                a = 0
+                numbit = list9[j+1]-list9[j]-1
+                
+
+                for k in range(numbit):
+                    
+
+                    a += (str1[i+1][list9[j]+1+k]-48)*(10**(numbit-k-1))
+
+                
+                #删除数据 
+                
+                if(a == 0):
+                    continue
+                if(count != 1):
+                    
+                    b = randomlarge(a)
+                else:
+                    b = a
+                    print(b)
+                prec = []
+                for k in range(len(str(b))):
+                    
+                    c = b%10+48
+                    b = int(b/10)
+                    prec.append(c)
+                for k in range(len(prec)-1,-1,-1):
+                    prestr.append(prec[k])
+                prestr.append(9)
+            prestr.pop(-1)
+            
+            prestr.append(13)
+            prestr.append(10)
+
+
+                
+            str1[i+1] = bytes(prestr)
+        if(str1[i] == b'\t[static data]\r\n' or\
+           str1[i] == b'\t[cool time]\r\n' or\
+           str1[i] == b'\t[consume MP]\r\n' or
+           str1[i] == b'[cool time]\r\n' or
+           str1[i] == b'[static time]\r\n' or
+           str1[i] == b'[casting time]\r\n' ):
+           
+            
+            
+            prestr = bytearray([])
+            prestr.append(9)
+            prestr.append(9)
+            list9 = []
+            for j in range(len(str1[i+1])):
+     
+                
+                if(str1[i+1][j] == 9):
+                    
+                    list9.append(j)
+                #else:
+                #    print(str1[i+1][j],' in ',j)
+            
+            list9.append(len(str1[i+1])-2)
+            #print(list9)
+
+            for j in range(len(list9)-1):
+
+                a = 0
+                numbit = list9[j+1]-list9[j]-1
+                
+                flag_fu = 0
+                for k in range(numbit):
+                    
+                    
+                    if(str1[i+1][list9[j]+1+k] == 45):
+                        print('yes')
+                        flag_fu = 1
+                    a += (str1[i+1][list9[j]+1+k]-48)*(10**(numbit-k-1))
+
+                
+                #删除数据 
+                
+                if(a == 0):
+                    continue
+
+                    
+                b = randomlarge(a)
+
+                if(flag_fu == 0):
+                    
+
+                    prec = []
+                    for k in range(len(str(b))):
+                        
+                        c = b%10+48
+                        b = int(b/10)
+                        prec.append(c)
+                    for k in range(len(prec)-1,-1,-1):
+                        prestr.append(prec[k])
+                    prestr.append(9)
+                else:
+                    prec = []
+                    for k in range(numbit):
+                        prec.append(str1[i+1][list9[j]+1+k])
+                    for k in range(len(prec)):
+                        prestr.append(prec[k])
+                    prestr.append(9)
+                
+            prestr.pop(-1)
+            
+            prestr.append(13)
+            prestr.append(10)
+
+
+                
+            str1[i+1] = bytes(prestr)
+                
+                
+        
+
+
+        
+
+    file = open('changed/' + filename,'wb')
+    file.writelines(str1)
+    file.close()
+    print(filename)
+                
+            
+                
+        
+            
+        
+
+   
